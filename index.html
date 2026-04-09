@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="md-theme-default">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/3738a5d818.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="nav">
+                    <figure class="nav__logo">
+                        <img src="./assets/absolute cinema.png" alt="" class="logo">
+                    </figure>
+                    <div class="nav__links">
+                        <a href="" class="nav__link nav__link--white">Home</a>
+                        <a href="" class="nav__link nav__link--white">Find your movie</a>
+                        <a href="#" class="nav__link nav__link--btn">Contact</a>
+                    </div>
+                    <button class="btn__menu" onclick="openMenu()">
+                        <div class="fas fa-bars"></div>
+                    </button>
+                    <div class="menu__backdrop">
+                        <button class="btn__menu btn__menu--close" onclick="closeMenu()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <ul class="menu__links">
+                            <li class="menu__list"><a href="" class="menu__link menu__link--white">Home</a></li>
+                            <li class="menu__list"><a href="" class="menu__link menu__link--white">Find your movie</a></li>
+                            <li class="menu__list"><a href="" class="menu__link menu__link--white">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content__wrapper">
+                    <h1>Browse Our Movies</h1>
+                    <form action="" class="search-form">
+                        <input type="text" class="search-input" maxlength="80" placeholder="">
+                        <div class="search-button">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <i class="fa-solid fa-xmark search-close"></i>
+                        </div>
+                    </form>
+                    <div class="overlay">
+                    </div>
+                </div>
+            </div>
+            <section id="search">
+                <div class="md-progress-bar md-theme-default md-indeterminate" style="position: absolute; top: 0px; left: 0px; right: 0px;">
+                    <div class="md-progress-bar-track"></div>
+                    <div class="md-progress-bar-fill"></div>
+                    <div class="md-progress-bar-buffer"></div>
+                </div>
+                <div id="filter" class="content-wrapper justify-between">
+                    <div class="display__search--box">
+                        <h1 data-46guyuhv78 class="search-info">
+                            <span class="black-txt">Search Results:</span>
+                            <div class="display__box"></div>
+                        </h1>
+                    </div>
+                    <div class="slider__body">
+                        <div class="slider-filter flex flex-col">
+                            <h2>
+                                <span class="black-txt slider-range" style="margin-right: 8px;"> Movie Range</span>
+                            </h2>
+                            <p class="slider-index">Use slider to display min and max of movies</p>
+                            <div class="slider-input">
+                                <div class="slider__field">
+                                    <div class="field">
+                                        <span style="color: #fff;">Min</span>
+                                        <input type="number" class="input-min input-min--cursor" value="0" readonly>
+                                    </div>
+                                    <div class="seperator">-</div>
+                                    <div class="field">
+                                        <span style="color: #fff;">Max</span>
+                                        <input id="field-input" type="number" class="input-max" value="9">
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="range-input">
+                                    <input id="field-input" type="range" class="range-min" min="0" max="9" value="0" disabled>
+                                    <input id="field-input" type="range" class="range-max" min="0" max="9" value="9">
+                                </div>
+                                <div class="slider__submit--btn">
+                                    <button type="submit" class="submit__button">
+                                        <strong>Submit Input</strong>
+                                    </button>
+                                </div>
+                                <!--<div class="movie__filter">
+                                    <select id="filter" class="filter" onchange="filterMovies(event)">
+                                        <option value="" disabled selected>Sort</option>
+                                            <option value="A - Z">A - Z</option>
+                                            <option value="Z - A">Z - A</option>
+                                            <option value="Year">Year</option>
+                                            <option value="imdbID">imdbID</option>
+                                            <option value="Type">Type</option>
+                                        </select>
+                                </div>-->
+                            </div>
+                        </div>
+                        <h2 class="slider__instructions">* Movies Won't Load until you select an <br> input on the slider and push submit input.</h2>
+                </div>
+                </div>
+                <div id="movies">
+                    <div class="movies__container">
+                        <div class="movies__row">
+                            <div class="movies__tags">
+                                <h3 class="section__title movie__header--title section__title--hover">
+                                    All <span class="orange">Movies</span>
+                                </h3>
+                            </div>
+                            <div class="movie">
+                                <i class="fas fa-spinner movies__loading--spinner"  style="font-size: 48px; color: rgba(237, 12, 12, 0.486); margin-top: 32px;"></i>
+                            </div>
+                            <!--<div class="movie">
+                                <h2 class="section__title movie__header--title">
+                                    All <span class="orange">Movies</span>
+                                </h2>
+                                <select id="filter">
+                                    <option value="" disabled selected>Sort</option>
+                                    <option value="LOW_TO_HIGH">Sort</option>
+                                    <option value="HIGH_TO_LOW">Sort</option>
+                                </select>
+                                <div class="title">
+                                    <div class="movie__title">
+                                        Resident Evil: Degeneration
+                                    </div>
+                                    <div class="movie__year">
+                                        2008
+                                    </div>
+                                    <div class="imdbID">
+                                        tt1174954
+                                    </div>
+                                    <div class="type">
+                                        movie
+                                    </div>
+                                    <div class="poster">
+                                        <img id="dynamic-image" src="" alt="Dynamically loaded image">
+                                    </div>
+                                </div>
+                            </div> !-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer>
+        <div class="footer__row">
+            <div class="footer__columns">
+                <div class="footer__column">
+                    <a href="" class="nav__link nav__link--white nav__link--margins">Home</a>
+                </div>
+                <div class="footer__column--divider">|</div>
+                <div class="footer__column">
+                    <a href="" class="nav__link nav__link--white nav__link--margins">Find Your Movie</a>
+                </div>
+                <div class="footer__column--divider">|</div>
+                <div class="footer__column">
+                    <a href="" class="nav__link nav__link--white nav__link--margin">Contact</a>
+                </div>
+            </div>
+            <div class="footer__divider"></div>
+        </div>
+        <div class="footer__bottom">
+            <figure class="footer__logo">
+                <img src="./assets/absolute cinema.png" alt="" class="logo">
+            </figure>
+            <div class="footer__copyright">
+                @ 2026 Absolute Cinema Inc. All Rights Reserved
+            </div>
+            <div class="footer__socials">
+                <a class="footer__social--link">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a class="footer__social--link">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a class="footer__social--link">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="index.js"></script>
+
+            <!----  <section>
+                        <div class="container">
+                            <div class="row">
+                                <div class="content-wrapper">
+                                    <div class="loading-state flex justify-center">
+                                        <i class="fas fa-spinner movies__loading--spinner"  style="font-size: 30px; color: rgba(237, 12, 12, 0.486)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
