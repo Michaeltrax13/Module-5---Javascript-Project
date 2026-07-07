@@ -7,7 +7,23 @@ function closeMenu() {
 }
 // the loading spinner function
 
+function showLoading() {
+  const moviesWrapper = document.querySelector('.movie');
+  const loadingBar = document.querySelector('.md-progress-bar');
 
+  loadingBar.style.display = 'block';
+
+  moviesWrapper.innerHTML = `
+    <div class="movies__loading">
+      <i class="fas fa-spinner movies__loading--spinner"></i>
+    </div>
+  `;
+}
+
+function hideLoading() {
+  const loadingBar = document.querySelector('.md-progress-bar');
+  loadingBar.style.display = 'none';
+}
 
 //this section will filter your movies
 
@@ -58,28 +74,39 @@ function searchMovies(query) {
     displayMovies(filteredMovies); // Make sure to use a display function
 }
 
+
+
 let movies = []; // This should be populated with your fetched movie data
 
 // Define an asynchronous function to fetch movie data
 async function fetchMovies(searchTerm) {
-    // The URL for the OMDB API
-    const url = `https://www.omdbapi.com/?apikey=730421ab&s=${encodeURIComponent(searchTerm)}`;
-    
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        movies = data.Search || []; // Store the fetched movies here
-        setTimeout(() => {displayMovies(movies)}, 2000); // Call the display function to show movies
-    } catch (error) {
-        console.error("Error fetching movies:", error);
+  const url = `https://www.omdbapi.com/?apikey=730421ab&s=${encodeURIComponent(searchTerm)}`;
+
+  showLoading();
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    const data = await response.json();
+    movies = data.Search || [];
+
+    setTimeout(() => {
+      displayMovies(movies);
+    }, 2000);
+  } catch (error) {
+    hideLoading();
+    console.error("Error fetching movies:", error);
+  }
 }
 
 
 function displayMovies(movies) {
+    hideLoading();
+
     const moviesWrapper = document.querySelector('.movie');
     moviesWrapper.innerHTML = ''; // Clear previous movies
     movies.forEach(movie => {
@@ -105,65 +132,35 @@ function toggleSearch () {
 
     // Add event listener for search button
     searchButton.addEventListener('click', () => {
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm) {
-            console.log('Displaying loading elements')
-            fetchMovies(searchTerm)
-                .then(() => {
-                    searchDisplay.style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error fetching movies:', error);
-                })
-        }
-        searchForm.classList.toggle('active-search');
-    });
+  const searchTerm = searchInput.value.trim();
+
+  if (searchTerm) {
+    searchDisplay.textContent = ` ${searchTerm}`;
+    fetchMovies(searchTerm);
+  }
+
+  searchForm.classList.toggle('active-search');
+});
 
     // Handle Enter key for searching
     searchInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm) {
-                fetchMovies(searchTerm)
-                    .then(movies => {
-                        searchDisplay.style.display = 'block';
-                    })
-                    .catch(error => {
-                        console.error('Error fetching movies:', error);
-                    })
-            }
-            searchInput.value = '';
-            searchForm.classList.remove('active-search');
-            searchInput.blur();   
+    if (event.key === 'Enter') {
+        event.preventDefault();
+
+        const searchTerm = searchInput.value.trim();
+
+        if (searchTerm) {
+        searchDisplay.textContent = ` ${searchTerm}`;
+        fetchMovies(searchTerm);
         }
+
+        searchInput.value = '';
+        searchForm.classList.remove('active-search');
+        searchInput.blur();   
+    }
     });
 };
 
-setTimeout(() => {toggleSearch()},2000); 
+setTimeout(() => {toggleSearch()},2000);
 
 
-/*function displayLoadingElements() {
-    const loadingSpinner = document.querySelector('.fa-spinner')
-    const loadingBar = document.querySelector('.md-progress-bar')
-
-    console.log('Showing spinner...');
-    if(loadingSpinner) {
-        loadingSpinner.style.display = 'block';
-    }
-    if(loadingBar) {
-        loadingBar.style.display = 'block'
-    }
-}
-
-function hideLoadingElements() {
-    const loadingSpinner = document.querySelector('.fa-spinner')
-    const loadingBar = document.querySelector(' .md-progress-bar')
-
-    console.log('Hiding spinner...');
-    if(loadingSpinner) {
-        loadingSpinner.style.display = 'none';
-    }
-        if(loadingBar) {
-        loadingBar.style.display = 'none'
-    }
-}*/
