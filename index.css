@@ -489,10 +489,6 @@ d animation {
     will-change: transform;
 }
 
-/* filter */
-/*#filter {
-    padding: 0 20px;
-}*/
 
 .justify-between {
     justify-content: space-between;
